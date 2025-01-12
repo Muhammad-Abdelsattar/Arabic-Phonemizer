@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=61.0.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "arabic_phonemizer"
+dynamic = ["version"]
+requires-python = ">=3.8"
+dependencies = []
+description = "An efficient multilingual vocie activity detector."
+authors = [
+    { name = "Muhammad Abd Al-sattar", email = "muhammadabdalsattar@gmail.com" },
+]
