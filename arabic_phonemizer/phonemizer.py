@@ -1,4 +1,4 @@
-from constants import (ARABIC2BUCKWALTER,
+from .constants import (ARABIC2BUCKWALTER,
                         SHAMSI_LETTERS,
                         QAMARI_LETTERS,
                         SPECIAL_WORDS_MAP,
