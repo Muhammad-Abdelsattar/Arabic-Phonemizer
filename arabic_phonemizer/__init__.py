@@ -1,0 +1,1 @@
+from .phonemizer import ArabicPhonemizer
