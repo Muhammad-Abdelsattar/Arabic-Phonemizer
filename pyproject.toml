@@ -7,7 +7,7 @@ name = "arabic_phonemizer"
 version = "0.0.1"
 requires-python = ">=3.8"
 dependencies = []
-description = "An efficient multilingual vocie activity detector."
+description = "A simple and efficient Arabic phonemizer."
 authors = [
     { name = "Muhammad Abd Al-sattar", email = "muhammadabdalsattar@gmail.com" },
 ]
