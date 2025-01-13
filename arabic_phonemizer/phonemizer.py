@@ -60,7 +60,10 @@ class ArabicPhonemizer:
                 lam_index = list_word.index("ل")
                 if undiacritized_word[2] in SHAMSI_LETTERS:
                     list_word.remove("ل")
-                    list_word.insert(lam_index+1, "ّ")
+                    if list_word[lam_index+1] != "ّ": #force Shadda after lam shamsia
+                        list_word.insert(lam_index+1,"ّ")
+                elif undiacritized_word[2] in QAMARI_LETTERS:
+                    list_word.insert(lam_index+1,"ْ")
             handled_words.append("".join(list_word))
 
         return " ".join(handled_words)
