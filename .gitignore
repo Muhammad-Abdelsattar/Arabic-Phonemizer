@@ -1,5 +1,6 @@
 *.jpg
 test.ipynb
+t.ipynb
 creds.json
 test.json
 lightning_logs/

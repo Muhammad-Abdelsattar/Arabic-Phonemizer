@@ -14,7 +14,7 @@ from arabic_phonemizer import AraabicPhonemizer
 
 phonemizer = AraabicPhonemizer()
 
-phonemizer.phonemize("السَلَامُ عَلَيْكُمُ")
+print(phonemizer.phonemize("السَلَامُ عَلَيْكُمُ"))
 ```
 output:
 ```
