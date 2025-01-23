@@ -1,8 +1,21 @@
+from .espeak import EspeakPhonemizer
 from .constants import *
+from pathlib import Path
 
 class ArabicPhonemizer:
     def __init__(self,
+                 phonemizer_type:str = "espeak",
                  separator:str = ""):
+
+        self.phonemizer_type = phonemizer_type
+        if self.phonemizer_type == "espeak":
+            library_path = Path(__file__).parent/"espeak/lib/libespeak-ng.so"
+            self.phonemizer = EspeakPhonemizer(voice="ar", 
+                                               preserved_punctuations=".,?",
+                                               use_stress=True,
+                                               library_path=library_path)
+        else:
+            raise ValueError(f"Invalid phonemizer: {phonemizer}")
         self.separator = separator
 
     def phonemize(self,
@@ -14,13 +27,18 @@ class ArabicPhonemizer:
         returns:
             str: A string of phonemes corresponding to the input text.
         """
-        text = self.handle_special_cases(text)
-        phonemized = ""
-        for char in text:
-            phonemized += self._char_to_phoneme(char)
-            if self.separator:
-                phonemized += self.separator
-        return phonemized
+        if self.phonemizer_type=="espeak":
+            text = self._handle_ta2_marboota_cases(text)
+            phonemized = self.phonemizer.phonemize(text)
+            return phonemized
+        else:
+            text = self.handle_special_cases(text)
+            phonemized = ""
+            for char in text:
+                phonemized += self._char_to_phoneme(char)
+                if self.separator:
+                    phonemized += self.separator
+            return phonemized
 
     def handle_special_cases(self, text: str) -> str:
         """
@@ -165,7 +183,7 @@ class ArabicPhonemizer:
             if self._starts_with_alf_lam(match.group()):
                 chars_list[match.end()-2:match.end()] = "هْ"
             else:
-                if words_pattern.match(text[match.end()+1:]):
+                if sentence_has_words_pattern.match(text[match.end()+1:]):
                     chars_list[match.end()-2:match.end()] = "تْ"
                 else:
                     chars_list[match.end()-2:match.end()] = "هْ"
@@ -182,13 +200,25 @@ class ArabicPhonemizer:
         """
         words = text.split()
         handled_words = []
-        for word in words:
-            undiacritized_word = self._remove_diacritics(word)
-            if undiacritized_word in SPECIAL_WORDS_MAP:
-                handled_words.append(SPECIAL_WORDS_MAP[undiacritized_word])
-            else:
-                handled_words.append(word)
-        return " ".join(handled_words)
+        handled = list(text)
+        matches = special_words_pattern.finditer(text)
+        for m in matches:
+            start = m.start(2)
+            end = m.end(2)
+            handled_word = SPECIAL_WORDS_MAP[self._remove_diacritics(m.group(2))]
+            for i in range(start, end):
+                handled[i] = ""
+            handled[start] = handled_word
+        return "".join(handled)
+            
+        # for word in words:
+        #     match = segment_pattern.match(word)
+        #     undiacritized_word = self._remove_diacritics(match.group(2))
+        #     if undiacritized_word in SPECIAL_WORDS_MAP:
+        #         handled_words.append(match.group(1)+SPECIAL_WORDS_MAP[undiacritized_word]+match.group(3))
+        #     else:
+        #         handled_words.append(word)
+        # return " ".join(handled_words)
 
     def _handle_undiacritizable_alf(self,
                                      text:str) -> str:

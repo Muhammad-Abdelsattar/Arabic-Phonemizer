@@ -29,21 +29,39 @@ SPECIAL_WORDS_MAP = { #Regularly being updated
     "لكنهم": "لَاكِنَّهُمْ",
     "لكنهما": "لَاكِنَّهُمَا",
     "لكننا": "لَاكِنَّنَا",
-    "الذي": "اللَّذِي",
-    "التي": "اللَّتِي",
+    "الذي": "اللَّذِيْ",
+    "للذي": "لللَّذِيْ",
+    "التي": "اللَّتِيْ",
+    "للتي": "لللَّتِيْ",
     "الذين": "اللَّذِينَ",
+    "للذين": "لللَّذِينَ",
 }
 
 ARABIC_LETTERS = "ابتثجحخدذرزسشصضطظعغفقكلمنهويىءةؤئإأآ"
 SHAMSI_LETTERS = "تثدذرزسشصضطظلن"
 QAMARI_LETTERS = "اأإآبجحخعغفقكمهوي"
 TASHKEEL = "ًٌٍَُِّْ"
-PUNCTUATIONS = "".join(["،",",","؛"",",":",",","؟","?","\\-",",","_",",",".",";","\"","\'"])
+PUNCTUATIONS = "".join(["،",",","؛"",",":",",","؟","?","\-",",","_",",",".",";","\"","\'"])
+
+
+def get_special_words_pattern_group():
+    words = list(SPECIAL_WORDS_MAP.keys())
+    pattern = []
+    for word in words:
+        word_p = []
+        word_chars = list(word)
+        for char in word_chars:
+            word_p.append(f"{char}[{TASHKEEL}]*")
+        pattern.append("".join(word_p))
+    return "|".join(pattern)
+            
+special_words_pattern_group = get_special_words_pattern_group()
 
 alf_wasl_pattern = re.compile(f"\\b(?<![{TASHKEEL}])ا[{ARABIC_LETTERS+TASHKEEL}]+\\b",re.UNICODE)
-# alf_mad_pattern = re.compile(f"{wb}([{ARABIC_LETTERS+TASHKEEL}]+)(ا[{TASHKEEL}]*)([{ARABIC_LETTERS+TASHKEEL}]+){wb}",re.UNICODE)
+# alf_mad_pattern = re.compile(f"\\b([{ARABIC_LETTERS+TASHKEEL}]+[^ا[{TASHKEEL}]*ل[{TASHKEEL}]*])(ا[{TASHKEEL}]*)([{ARABIC_LETTERS+TASHKEEL}]+)",re.UNICODE)
 ta2_marbootah_sakenah_pattern = re.compile(f"\\b[{ARABIC_LETTERS+TASHKEEL}]+ةْ",re.UNICODE)
-words_pattern = re.compile(f"\\b(?<![{PUNCTUATIONS}])[{ARABIC_LETTERS+TASHKEEL}]+\\b",re.UNICODE)
+sentence_has_words_pattern = re.compile(f"\\b(?<![{PUNCTUATIONS}])[{ARABIC_LETTERS+TASHKEEL}]+\\b",re.UNICODE)
+special_words_pattern = re.compile(f"(^|[{PUNCTUATIONS}]|[\\s]*)({special_words_pattern_group})($|[{PUNCTUATIONS}]|[\\s]*)",re.UNICODE)
 char_alf_lam_pattern = re.compile(f"\\b[كفوب][{TASHKEEL}]*ا[{TASHKEEL}]*ل[{TASHKEEL}]*[{ARABIC_LETTERS+TASHKEEL}]+\\b",re.UNICODE)
 char_char_alf_lam_pattern = re.compile(f"\\b[وف][{TASHKEEL}]*[كفوب][{TASHKEEL}]*ا[{TASHKEEL}]*ل[{TASHKEEL}]*[{ARABIC_LETTERS+TASHKEEL}]+\\b",re.UNICODE)
 alf_lam_pattern = re.compile(f"\\bا[{TASHKEEL}]*ل[{TASHKEEL}]*[{ARABIC_LETTERS+TASHKEEL}]+\\b",re.UNICODE)
