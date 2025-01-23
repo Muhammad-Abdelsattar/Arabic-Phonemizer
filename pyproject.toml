@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0.0","setuptools-scm>=8.0.0","wheel"]
+requires = ["setuptools>=61.0.0","setuptools-scm>=8.0.0","cibuildwheel","wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -11,3 +11,20 @@ description = "A simple and efficient Arabic phonemizer."
 authors = [
     { name = "Muhammad Abd Al-sattar", email = "muhammadabdalsattar@gmail.com" },
 ]
+
+[tool.setuptools]
+packages = ["arabic_phonemizer"]
+
+[tool.cibuildwheel]
+# Build options
+archs = { macos = ["x86_64", "arm64"], linux = ["x86_64", "aarch64"], windows = ["AMD64"] }
+
+[tool.cibuildwheel.macos]
+architectures = ["x86_64", "arm64"]
+
+[tool.cibuildwheel.linux]
+architectures = ["x86_64", "aarch64"]
+
+[tool.cibuildwheel.windows]
+architectures = ["AMD64"]
+

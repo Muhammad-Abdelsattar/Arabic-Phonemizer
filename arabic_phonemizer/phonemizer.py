@@ -1,3 +1,4 @@
+import platform
 from .espeak import EspeakPhonemizer
 from .constants import *
 from pathlib import Path
@@ -9,13 +10,21 @@ class ArabicPhonemizer:
 
         self.phonemizer_type = phonemizer_type
         if self.phonemizer_type == "espeak":
-            library_path = Path(__file__).parent/"espeak/lib/libespeak-ng.so"
+            system = platform.system().lower()
+            if system == "linux":
+                library_name = "libespeak-ng.so"
+            elif system == "darwin":
+                library_name = "libespeak-ng.dylib"
+            elif system == "windows":
+                library_name = "espeak-ng.dll"
+            else:
+                raise ValueError(f"Unsupported system: {system}")
+            library_path = Path(__file__).parent/library_name
             self.phonemizer = EspeakPhonemizer(voice="ar", 
                                                preserved_punctuations=".,?",
                                                use_stress=True,
                                                library_path=library_path)
-        else:
-            raise ValueError(f"Invalid phonemizer: {phonemizer}")
+
         self.separator = separator
 
     def phonemize(self,
