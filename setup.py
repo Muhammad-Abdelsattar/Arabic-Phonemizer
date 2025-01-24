@@ -1,56 +1,3 @@
-# from setuptools import setup
-
-# setup()
-# import os
-# import shutil
-# import platform
-# from setuptools import setup
-# from setuptools.dist import Distribution
-
-# # Determine the current platform and architecture
-# current_platform = platform.system().lower()
-# current_arch = platform.machine().lower()
-
-# # Map platforms and architectures to their respective library directories
-# PLATFORM_LIB_DIRS = {
-#     "windows": {
-#         "amd64": os.path.join("win", "amd64"),  # Windows x86_64
-#         "arm64": os.path.join("win", "arm64"),  # Windows ARM64
-#     },
-#     "linux": {
-#         "x86_64": os.path.join("linux", "x86_64"),  # Linux x86_64
-#         "aarch64": os.path.join("linux", "arm64"),  # Linux ARM64
-#     },
-#     "darwin": {
-#         "x86_64": os.path.join("macos", "x86_64"),  # macOS x86_64
-#         "arm64": os.path.join("macos", "arm64"),    # macOS ARM64
-#     },
-# }
-
-# lib_dir = PLATFORM_LIB_DIRS.get(current_platform, {}).get(current_arch)
-# if not lib_dir:
-#     raise RuntimeError(f"Unsupported platform/architecture: {current_platform}/{current_arch}")
-
-
-# package_data = {
-#     "arabic_phonemizer": [os.path.join("espeak","libs", lib_dir, "*")]
-# }
-
-
-
-# setup(
-#     # package_data=package_data,
-#     # include_package_data=True,
-#     distclass=BinaryDistribution,
-# )
-# setup(
-#     package_data={'my_package': lib_files},
-#     # Include the platform name in the wheel metadata
-#     options={'bdist_wheel': {'plat_name': plat_name}},
-#     # ... other metadata ...
-# )
-
-
 from setuptools import setup, find_packages
 import sys
 import os
@@ -92,17 +39,18 @@ def get_platform_dir():
     }
     return PLATFORM_LIB_DIRS.get(system.lower(), {}).get(target_arch.lower())
 
-parent = Path("arabic_phonemizer")
+parent = Path(__file__).parent / "arabic_phonemizer"
 # parent = Path(".")
 
 platform_dir = get_platform_dir()
-lib_files = [str(p)
-             for p in (parent / 'shared_libs' / platform_dir).rglob("*")]
+lib_files = []
+lib_files.extend([str(p) for p in (parent / 'espeak' / 'shared_libs' / platform_dir).rglob("*")])
+shared = [str(p) for p in (parent / 'espeak' / 'shared_libs' / platform_dir).rglob("*")]
 
 lib_files.extend([str(p) for p in (parent / 'espeak' / 'espeak-ng-data' ).rglob("*")])
 
 # Include the platform-specific libraries as package data
-package_data = {package_name: lib_files}
+package_data = {package_name+".espeak": lib_files}
 
 class BinaryDistribution(Distribution):
     def is_pure(self):
@@ -115,9 +63,8 @@ class BinaryDistribution(Distribution):
 setup(
     package_dir={'arabic_phonemizer': 'arabic_phonemizer'},
     # package=find_packages(),
-    packages=["arabic_phonemizer"],
+    # packages=["arabic_phonemizer"],
     package_data=package_data,
-    include_package_data=True,
+    # include_package_data=True,
     distclass=BinaryDistribution,
 )
-print(lib_files)

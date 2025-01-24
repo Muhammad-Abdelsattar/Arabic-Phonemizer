@@ -5,7 +5,7 @@ from .api import EspeakAPI
 
 class EspeakPhonemizer:
     """A phonemizer using the espeak-ng library"""
-    
+   
     def __init__(self,
                  library_path:str = "./lib/libespeak-ng.so",
                  voice:str = "ar",
