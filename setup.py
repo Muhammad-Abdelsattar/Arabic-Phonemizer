@@ -40,7 +40,6 @@ def get_platform_dir():
     return PLATFORM_LIB_DIRS.get(system.lower(), {}).get(target_arch.lower())
 
 parent = Path(__file__).parent / "arabic_phonemizer"
-# parent = Path(".")
 
 platform_dir = get_platform_dir()
 lib_files = []
@@ -62,9 +61,6 @@ class BinaryDistribution(Distribution):
 # Set up the package
 setup(
     package_dir={'arabic_phonemizer': 'arabic_phonemizer'},
-    # package=find_packages(),
-    # packages=["arabic_phonemizer"],
     package_data=package_data,
-    # include_package_data=True,
     distclass=BinaryDistribution,
 )

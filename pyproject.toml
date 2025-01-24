@@ -1,34 +1,17 @@
 [build-system]
-requires = ["setuptools>=61.0.0","wheel","cython"]
+requires = ["setuptools>=61.0.0","wheel","cibuildwheel","cython"]
 build-backend = "setuptools.build_meta"
 
 [project]
 name = "arabic_phonemizer"
 version = "1.0.0"
-requires-python = ">=3.8"
+requires-python = ">=3.9"
 dependencies = []
 description = "A simple and efficient Arabic phonemizer."
 authors = [
     { name = "Muhammad Abd Al-sattar", email = "muhammadabdalsattar@gmail.com" },
 ]
 
-# [tool.setuptools.packages.find]
-# include = ["arabic_phonemizer"]
-
 
 [tool.setuptools]
 packages = ["arabic_phonemizer","arabic_phonemizer.espeak"]
-
-# [tool.cibuildwheel]
-# # Build options
-# archs = { macos = ["x86_64", "arm64"], linux = ["x86_64", "aarch64"], windows = ["AMD64"] }
-
-# [tool.cibuildwheel.macos]
-# architectures = ["x86_64", "arm64"]
-
-# [tool.cibuildwheel.linux]
-# architectures = ["x86_64", "aarch64"]
-
-# [tool.cibuildwheel.windows]
-# architectures = ["AMD64"]
-
