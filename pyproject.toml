@@ -13,8 +13,11 @@ authors = [
     { name = "Muhammad Abd Al-sattar", email = "muhammadabdalsattar@gmail.com" },
 ]
 
-[tool.setuptools]
-packages = ["arabic_phonemizer"]
+[tool.setuptools.packages.find]
+include = ["arabic_phonemizer*"]
+
+# [tool.setuptools]
+# packages = ["arabic_phonemizer"]
 
 [tool.cibuildwheel]
 # Build options
