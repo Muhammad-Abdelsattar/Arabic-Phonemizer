@@ -1,6 +1,6 @@
 [build-system]
-requires = ["setuptools>=61.0.0","setuptools-scm>=8.0.0","wheel","cython"]
-# ,"cibuildwheel"
+requires = ["setuptools>=61.0.0","wheel","cython"]
+# ,"cibuildwheel","setuptools-scm>=8.0.0"
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -13,8 +13,9 @@ authors = [
     { name = "Muhammad Abd Al-sattar", email = "muhammadabdalsattar@gmail.com" },
 ]
 
-[tool.setuptools.packages.find]
-include = ["arabic_phonemizer*"]
+# [tool.setuptools.packages.find]
+# include = ["arabic_phonemizer"]
+
 
 # [tool.setuptools]
 # packages = ["arabic_phonemizer"]

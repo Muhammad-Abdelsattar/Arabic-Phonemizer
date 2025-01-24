@@ -97,19 +97,26 @@ platform_dir = get_platform_dir()
 lib_files = [str(Path('arabic_phonemizer')/'shared_libs' / platform_dir / filename)
              for filename in os.listdir(str(Path('arabic_phonemizer')/'shared_libs' / platform_dir))]
 
-lib_files.append(str(Path('arabic_phonemizer')/'shared_libs' / 'espeak-ng-data'/'**'/'*'))
+lib_files.append(str(Path('arabic_phonemizer')/'shared_libs' / 'espeak-ng-data'))
+
+print(os.listdir())
 
 # Include the platform-specific libraries as package data
 package_data = {package_name: lib_files}
 
-# class BinaryDistribution(Distribution):
-#     def is_pure(self):
-#         return False  
+class BinaryDistribution(Distribution):
+    def is_pure(self):
+        return False  
+    
+    def has_ext_modules(self):
+        return True
 
 # Set up the package
 setup(
     package_dir={'arabic_phonemizer': 'arabic_phonemizer'},
+    # package=find_packages(),
+    packages=["arabic_phonemizer"],
     package_data=package_data,
     include_package_data=True,
-    # distclass=BinaryDistribution,
+    distclass=BinaryDistribution,
 )
