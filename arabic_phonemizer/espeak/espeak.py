@@ -12,7 +12,7 @@ class EspeakPhonemizer:
                  use_stress:bool = True,
                  preserved_punctuations:str = ".,?;،:؟!؛",):
 
-        self._init_env(data_path=str(Path(library_path).parent/"espeak-ng-data"))
+        self._init_env(data_path=str(Path(__file__).parent/"espeak-ng-data"))
         self._api = EspeakAPI(library_path)
         
         self.voice = voice

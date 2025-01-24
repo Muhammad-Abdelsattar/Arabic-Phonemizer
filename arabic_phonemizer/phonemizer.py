@@ -11,6 +11,7 @@ class ArabicPhonemizer:
         self.phonemizer_type = phonemizer_type
         if self.phonemizer_type == "espeak":
             system = platform.system().lower()
+            current_platform  = platform.machine().lower()
             if system == "linux":
                 library_name = "libespeak-ng.so"
             elif system == "darwin":
@@ -19,7 +20,7 @@ class ArabicPhonemizer:
                 library_name = "espeak-ng.dll"
             else:
                 raise ValueError(f"Unsupported system: {system}")
-            library_path = Path(__file__).parent/library_name
+            library_path = Path(__file__).parent/ "shared_libs" / system / current_platform / library_name
             self.phonemizer = EspeakPhonemizer(voice="ar", 
                                                preserved_punctuations=".,?",
                                                use_stress=True,
