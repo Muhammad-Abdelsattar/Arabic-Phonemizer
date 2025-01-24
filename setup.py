@@ -102,14 +102,14 @@ lib_files.append(str(Path('shared_libs') / 'espeak-ng-data'/'**'/'*'))
 # Include the platform-specific libraries as package data
 package_data = {package_name: lib_files}
 
-class BinaryDistribution(Distribution):
-    def is_pure(self):
-        return False  
+# class BinaryDistribution(Distribution):
+#     def is_pure(self):
+#         return False  
 
 # Set up the package
 setup(
     package_dir={'arabic_phonemizer': 'arabic_phonemizer'},
     package_data=package_data,
     include_package_data=True,
-    distclass=BinaryDistribution,
+    # distclass=BinaryDistribution,
 )
