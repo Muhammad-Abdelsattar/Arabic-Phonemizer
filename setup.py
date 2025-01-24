@@ -94,10 +94,10 @@ def get_platform_dir():
 
 print(os.listdir())
 platform_dir = get_platform_dir()
-lib_files = [str(Path('shared_libs') / platform_dir / filename)
-             for filename in os.listdir(str(Path('shared_libs') / platform_dir))]
+lib_files = [str(Path('arabic_phonemizer')/'shared_libs' / platform_dir / filename)
+             for filename in os.listdir(str(Path('arabic_phonemizer')/'shared_libs' / platform_dir))]
 
-lib_files.append(str(Path('shared_libs') / 'espeak-ng-data'/'**'/'*'))
+lib_files.append(str(Path('arabic_phonemizer')/'shared_libs' / 'espeak-ng-data'/'**'/'*'))
 
 # Include the platform-specific libraries as package data
 package_data = {package_name: lib_files}
