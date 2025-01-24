@@ -1,0 +1,7 @@
+Metadata-Version: 2.2
+Name: arabic_phonemizer
+Version: 0.1.0
+Summary: A simple and efficient Arabic phonemizer.
+Author-email: Muhammad Abd Al-sattar <muhammadabdalsattar@gmail.com>
+Requires-Python: >=3.8
+License-File: LICENCE.txt

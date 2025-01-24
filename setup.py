@@ -96,8 +96,8 @@ parent = Path("arabic_phonemizer")
 # parent = Path(".")
 
 platform_dir = get_platform_dir()
-lib_files = [str(parent/'shared_libs' / platform_dir / filename)
-             for filename in os.listdir(str(parent / 'shared_libs' / platform_dir))]
+lib_files = [str(p)
+             for p in (parent / 'shared_libs' / platform_dir).rglob("*")]
 
 lib_files.extend([str(p) for p in (parent / 'espeak' / 'espeak-ng-data' ).rglob("*")])
 
@@ -120,5 +120,4 @@ setup(
     include_package_data=True,
     distclass=BinaryDistribution,
 )
-
-print(os.getcwd())
+print(lib_files)
