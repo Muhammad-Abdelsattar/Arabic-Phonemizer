@@ -93,7 +93,7 @@ def get_platform_dir():
     return PLATFORM_LIB_DIRS.get(system.lower(), {}).get(target_arch.lower())
 
 parent = Path("arabic_phonemizer")
-# parent = Path(".")
+parent = Path(".")
 
 platform_dir = get_platform_dir()
 lib_files = [str(parent/'shared_libs' / platform_dir / filename)
