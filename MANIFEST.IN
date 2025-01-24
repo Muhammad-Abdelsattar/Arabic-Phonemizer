@@ -1,0 +1,2 @@
+recursive-include arabic_phonemizer/shared_libs *
+recursive-include arabic_phonemizer/espeak/espeak-ng-data *
