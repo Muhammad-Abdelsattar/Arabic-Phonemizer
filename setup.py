@@ -93,13 +93,13 @@ def get_platform_dir():
     return PLATFORM_LIB_DIRS.get(system.lower(), {}).get(target_arch.lower())
 
 parent = Path("arabic_phonemizer")
-parent = Path(".")
+# parent = Path(".")
 
 platform_dir = get_platform_dir()
 lib_files = [str(parent/'shared_libs' / platform_dir / filename)
              for filename in os.listdir(str(parent / 'shared_libs' / platform_dir))]
 
-# lib_files.extend(str(parent / 'shared_libs' / 'espeak-ng-data' /  "*"))
+lib_files.extend([str(p) for p in (parent / 'espeak' / 'espeak-ng-data' ).rglob("*")])
 
 # Include the platform-specific libraries as package data
 package_data = {package_name: lib_files}
@@ -120,3 +120,5 @@ setup(
     include_package_data=True,
     distclass=BinaryDistribution,
 )
+
+print(os.getcwd())
